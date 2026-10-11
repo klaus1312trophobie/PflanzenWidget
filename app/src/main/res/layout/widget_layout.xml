@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#121212"
+    android:padding="12dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PFLANZENMONITOR"
+        android:textColor="#808080"
+        android:textSize="9sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.15" />
+
+    <TextView
+        android:id="@+id/tv_moisture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Boden: -- %"
+        android:textColor="#76FF03"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="2dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:id="@+id/tv_temp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Temp: -- °C"
+            android:textColor="#E0E0E0"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Luft: -- %"
+            android:textColor="#E0E0E0"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tippen zum Aktualisieren"
+        android:textColor="#666666"
+        android:textSize="9sp"
+        android:layout_marginTop="4dp" />
+</LinearLayout>
