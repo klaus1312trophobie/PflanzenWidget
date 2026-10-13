@@ -4,59 +4,220 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#121212"
-    android:padding="12dp"
-    android:gravity="center_vertical">
+    android:background="@drawable/widget_bg"
+    android:padding="14dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PFLANZENMONITOR"
-        android:textColor="#808080"
-        android:textSize="9sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.15" />
-
-    <TextView
-        android:id="@+id/tv_moisture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Boden: -- %"
-        android:textColor="#76FF03"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="2dp" />
-
+    <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="4dp">
+        android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/tv_temp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Temp: -- °C"
-            android:textColor="#E0E0E0"
-            android:textSize="12sp" />
+            android:text="🌿 GREEN GUARDIAN"
+            android:textColor="#8FBF8F"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.12" />
 
         <TextView
-            android:id="@+id/tv_humidity"
+            android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Luft: -- %"
-            android:textColor="#E0E0E0"
-            android:textSize="12sp" />
+            android:text="Tippen zum Aktualisieren"
+            android:textColor="#7A8F7A"
+            android:textSize="10sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_status"
-        android:layout_width="wrap_content"
+    <!-- Soil moisture hero -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tippen zum Aktualisieren"
-        android:textColor="#666666"
-        android:textSize="9sp"
-        android:layout_marginTop="4dp" />
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:id="@+id/tv_moisture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-- %"
+            android:textColor="#76FF03"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_soil_state"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingBottom="6dp"
+            android:text="💧 Bodenfeuchte"
+            android:textColor="#C8E6C9"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="2dp">
+
+        <ProgressBar
+            android:id="@+id/bar_green"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:max="100"
+            android:progressDrawable="@drawable/bar_green" />
+
+        <ProgressBar
+            android:id="@+id/bar_orange"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:max="100"
+            android:visibility="gone"
+            android:progressDrawable="@drawable/bar_orange" />
+
+        <ProgressBar
+            android:id="@+id/bar_red"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:max="100"
+            android:visibility="gone"
+            android:progressDrawable="@drawable/bar_red" />
+    </FrameLayout>
+
+    <!-- Temp / humidity / VPD tiles -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/tile_bg"
+            android:padding="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌡️ TEMP"
+                android:textColor="#9DB59D"
+                android:textSize="9sp" />
+            <TextView
+                android:id="@+id/tv_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-- °C"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_temp_mm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#7A8F7A"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/tile_bg"
+            android:layout_marginStart="6dp"
+            android:padding="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💨 LUFT"
+                android:textColor="#9DB59D"
+                android:textSize="9sp" />
+            <TextView
+                android:id="@+id/tv_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-- %"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_hum_mm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#7A8F7A"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/tile_bg"
+            android:layout_marginStart="6dp"
+            android:padding="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🍃 VPD"
+                android:textColor="#9DB59D"
+                android:textSize="9sp" />
+            <TextView
+                android:id="@+id/tv_vpd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-- kPa"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_vpd_stage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#7A8F7A"
+                android:textSize="9sp"
+                android:singleLine="true" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Footer -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/tv_watered"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="🚿 Gegossen: --"
+            android:textColor="#9DB59D"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/tv_soil_mm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#9DB59D"
+            android:textSize="10sp" />
+    </LinearLayout>
 </LinearLayout>
