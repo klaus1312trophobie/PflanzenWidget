@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/widget_bg"
-    android:padding="14dp">
+    android:padding="8dp">
 
     <!-- Header -->
     <LinearLayout
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="bottom"
-        android:layout_marginTop="4dp">
+        android:layout_marginTop="0dp">
 
         <TextView
             android:id="@+id/tv_moisture"
@@ -48,20 +48,33 @@
             android:layout_height="wrap_content"
             android:text="-- %"
             android:textColor="#76FF03"
-            android:textSize="34sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_soil_state"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:gravity="end"
-            android:paddingBottom="6dp"
-            android:text="💧 Bodenfeuchte"
-            android:textColor="#C8E6C9"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            android:paddingBottom="3dp">
+            <TextView
+                android:id="@+id/tv_soil_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💧 Bodenfeuchte"
+                android:textColor="#C8E6C9"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_watered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="🚿 --"
+                android:textColor="#9DB59D"
+                android:textSize="10sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <FrameLayout
@@ -99,9 +112,12 @@
     <!-- Temp / humidity / VPD tiles -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="2dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -109,7 +125,7 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:background="@drawable/tile_bg"
-            android:padding="8dp">
+            android:padding="5dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -122,12 +138,13 @@
                 android:layout_height="wrap_content"
                 android:text="-- °C"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/tv_temp_mm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text=""
                 android:textColor="#7A8F7A"
                 android:textSize="9sp" />
@@ -140,7 +157,7 @@
             android:orientation="vertical"
             android:background="@drawable/tile_bg"
             android:layout_marginStart="6dp"
-            android:padding="8dp">
+            android:padding="5dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -153,12 +170,13 @@
                 android:layout_height="wrap_content"
                 android:text="-- %"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/tv_hum_mm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text=""
                 android:textColor="#7A8F7A"
                 android:textSize="9sp" />
@@ -171,7 +189,7 @@
             android:orientation="vertical"
             android:background="@drawable/tile_bg"
             android:layout_marginStart="6dp"
-            android:padding="8dp">
+            android:padding="5dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -184,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:text="-- kPa"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/tv_vpd_stage"
@@ -197,28 +215,4 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Footer -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp">
-
-        <TextView
-            android:id="@+id/tv_watered"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="🚿 Gegossen: --"
-            android:textColor="#9DB59D"
-            android:textSize="10sp" />
-
-        <TextView
-            android:id="@+id/tv_soil_mm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="#9DB59D"
-            android:textSize="10sp" />
-    </LinearLayout>
 </LinearLayout>

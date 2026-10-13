@@ -118,25 +118,24 @@ class PflanzenWidget : AppWidgetProvider() {
             json.optString("vpdStage", "").replace("vegetative", "veg.").replace("flowering", "flower")
         )
 
-        // --- min / max ---
+        // --- 24 h soil range ---
         val mm = json.optJSONObject("minmax")
-        if (mm != null) {
-            fun range(lo: String, hi: String, fmt: String): String {
-                val a = num(mm, lo)
-                val b = num(mm, hi)
-                return if (a == null || b == null) "" else
-                    String.format(Locale.GERMANY, fmt, a) + "–" + String.format(Locale.GERMANY, fmt, b)
-            }
-            views.setTextViewText(R.id.tv_temp_mm, range("tempMin", "tempMax", "%.0f°"))
-            views.setTextViewText(R.id.tv_hum_mm, range("humMin", "humMax", "%.0f%%"))
-            val soil = range("soilMin", "soilMax", "%.0f%%")
-            views.setTextViewText(R.id.tv_soil_mm, if (soil.isEmpty()) "" else "Boden 24h: $soil")
+        val lo = mm?.let { num(it, "soilMin") }
+        val hi = mm?.let { num(it, "soilMax") }
+        fun range(lo: String, hi: String, fmt: String): String {
+            val a = mm?.let { num(it, lo) }
+            val b = mm?.let { num(it, hi) }
+            return if (a == null || b == null) "" else
+                String.format(Locale.GERMANY, fmt, a) + "–" + String.format(Locale.GERMANY, fmt, b)
         }
+        views.setTextViewText(R.id.tv_temp_mm, range("tempMin", "tempMax", "%.0f°"))
+        views.setTextViewText(R.id.tv_hum_mm, range("humMin", "humMax", "%.0f%%"))
+        val soilRange = if (lo != null && hi != null) String.format(Locale.GERMANY, " · %.0f–%.0f%%", lo, hi) else ""
 
         // --- last watered (device clock) ---
         val watered = json.optLong("lastWatered", 0)
         val now = json.optLong("now", 0)
-        views.setTextViewText(R.id.tv_watered, "🚿 Gegossen: " + timeAgo(watered, now))
+        views.setTextViewText(R.id.tv_watered, "🚿 " + timeAgo(watered, now) + soilRange)
     }
 
     private fun timeAgo(t: Long, now: Long): String {
