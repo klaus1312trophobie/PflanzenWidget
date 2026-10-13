@@ -68,7 +68,7 @@ class PflanzenWidget : AppWidgetProvider() {
             bind(views, json)
             views.setTextViewText(
                 R.id.tv_status,
-                "● " + SimpleDateFormat("HH:mm", Locale.GERMANY).format(Date())
+                SimpleDateFormat("HH:mm", Locale.GERMANY).format(Date()) + " ↻"
             )
             views.setTextColor(R.id.tv_status, Color.parseColor("#7A8F7A"))
             appWidgetManager.updateAppWidget(appWidgetId, views)
