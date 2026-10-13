@@ -28,7 +28,8 @@
             android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tippen zum Aktualisieren"
+            android:text="↻ Aktualisieren"
+            android:padding="4dp"
             android:textColor="#7A8F7A"
             android:textSize="10sp" />
     </LinearLayout>

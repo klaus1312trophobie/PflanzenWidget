@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.view.View
 import android.widget.RemoteViews
 import org.json.JSONObject
@@ -43,9 +44,16 @@ class PflanzenWidget : AppWidgetProvider() {
         )
     }
 
+    private fun openDashboardIntent(context: Context, appWidgetId: Int): PendingIntent {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ESP32_URL.removeSuffix("/data")))
+        return PendingIntent.getActivity(context, appWidgetId + 1000, intent, PendingIntent.FLAG_IMMUTABLE)
+    }
+
     private fun updateWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
         val views = RemoteViews(context.packageName, R.layout.widget_layout)
-        views.setOnClickPendingIntent(R.id.widget_root, clickIntent(context, appWidgetId))
+        // tap anywhere -> open the web dashboard; tap the time/status (top right) -> refresh
+        views.setOnClickPendingIntent(R.id.widget_root, openDashboardIntent(context, appWidgetId))
+        views.setOnClickPendingIntent(R.id.tv_status, clickIntent(context, appWidgetId))
 
         try {
             val conn = URL(ESP32_URL).openConnection() as HttpURLConnection
