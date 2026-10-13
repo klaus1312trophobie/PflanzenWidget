@@ -17,7 +17,13 @@ import java.util.Date
 import java.util.Locale
 import kotlin.concurrent.thread
 
-class PflanzenWidget : AppWidgetProvider() {
+open class PflanzenWidget : AppWidgetProvider() {
+
+    // the Nothing theme subclass overrides these
+    protected open val layoutRes = R.layout.widget_layout
+    protected open val nothing = false
+    private val dimColor get() = if (nothing) "#8A8A8A" else "#7A8F7A"
+    private val errColor get() = if (nothing) "#D71921" else "#FF5252"
 
     // TRAGE HIER DIE ECHTE IP-ADRESSE DEINES ESP32 EIN:
     private val ESP32_URL = "http://192.168.178.99/data"
@@ -34,7 +40,7 @@ class PflanzenWidget : AppWidgetProvider() {
     }
 
     private fun clickIntent(context: Context, appWidgetId: Int): PendingIntent {
-        val intent = Intent(context, PflanzenWidget::class.java).apply {
+        val intent = Intent(context, this::class.java).apply {
             action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId))
         }
@@ -50,7 +56,7 @@ class PflanzenWidget : AppWidgetProvider() {
     }
 
     private fun updateWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-        val views = RemoteViews(context.packageName, R.layout.widget_layout)
+        val views = RemoteViews(context.packageName, layoutRes)
         // tap anywhere -> open the web dashboard; tap the time/status (top right) -> refresh
         views.setOnClickPendingIntent(R.id.widget_root, openDashboardIntent(context, appWidgetId))
         views.setOnClickPendingIntent(R.id.tv_status, clickIntent(context, appWidgetId))
@@ -68,9 +74,9 @@ class PflanzenWidget : AppWidgetProvider() {
             bind(views, json)
             views.setTextViewText(
                 R.id.tv_status,
-                SimpleDateFormat("HH:mm", Locale.GERMANY).format(Date()) + " ↻"
+                SimpleDateFormat("HH:mm", Locale.GERMANY).format(Date()) + (if (nothing) " ⟳" else " ↻")
             )
-            views.setTextColor(R.id.tv_status, Color.parseColor("#7A8F7A"))
+            views.setTextColor(R.id.tv_status, Color.parseColor(dimColor))
             appWidgetManager.updateAppWidget(appWidgetId, views)
         } catch (e: Exception) {
             showError(appWidgetManager, appWidgetId, views, "WLAN/IP Fehler")
@@ -79,9 +85,9 @@ class PflanzenWidget : AppWidgetProvider() {
 
     // keep the last values on screen, only flag the problem
     private fun showError(mgr: AppWidgetManager, id: Int, views: RemoteViews, msg: String) {
-        val v = RemoteViews(views.`package`, R.layout.widget_layout)
+        val v = RemoteViews(views.`package`, layoutRes)
         v.setTextViewText(R.id.tv_status, "⚠ $msg")
-        v.setTextColor(R.id.tv_status, Color.parseColor("#FF5252"))
+        v.setTextColor(R.id.tv_status, Color.parseColor(errColor))
         mgr.partiallyUpdateAppWidget(id, v)
     }
 
@@ -92,7 +98,12 @@ class PflanzenWidget : AppWidgetProvider() {
         // --- soil moisture (hero) ---
         val moisture = json.optInt("moisture", -1)
         val threshold = json.optInt("threshold", 40)
-        val (color, bar, state) = when {
+        val (color, bar, state) = if (nothing) when {
+            moisture < 0 -> Triple("#8A8A8A", R.id.bar_green, "NO DATA")
+            moisture < threshold -> Triple("#D71921", R.id.bar_red, "DRY / WATER NOW")
+            moisture < threshold + 15 -> Triple("#FFFFFF", R.id.bar_orange, "WATER SOON")
+            else -> Triple("#FFFFFF", R.id.bar_green, "SOIL OK")
+        } else when {
             moisture < 0 -> Triple("#9E9E9E", R.id.bar_green, "💧 Kein Messwert")
             moisture < threshold -> Triple("#FF5252", R.id.bar_red, "🥵 Durstig – gießen!")
             moisture < threshold + 15 -> Triple("#FFAB00", R.id.bar_orange, "⏳ Bald gießen")
@@ -116,6 +127,7 @@ class PflanzenWidget : AppWidgetProvider() {
         views.setTextViewText(
             R.id.tv_vpd_stage,
             json.optString("vpdStage", "").replace("vegetative", "veg.").replace("flowering", "flower")
+                .let { if (nothing) it.uppercase() else it }
         )
 
         // --- 24 h soil range ---
@@ -135,10 +147,20 @@ class PflanzenWidget : AppWidgetProvider() {
         // --- last watered (device clock) ---
         val watered = json.optLong("lastWatered", 0)
         val now = json.optLong("now", 0)
-        views.setTextViewText(R.id.tv_watered, "🚿 " + timeAgo(watered, now) + soilRange)
+        views.setTextViewText(R.id.tv_watered, (if (nothing) "WATERED " else "🚿 ") + timeAgo(watered, now) + soilRange)
     }
 
     private fun timeAgo(t: Long, now: Long): String {
+        if (nothing) {
+            if (t <= 0 || now <= 0) return "NEVER"
+            val s = now - t
+            return when {
+                s < 60 -> "JUST NOW"
+                s < 3600 -> "${s / 60}MIN AGO"
+                s < 86400 -> "${s / 3600}H AGO"
+                else -> "${s / 86400}D ${s % 86400 / 3600}H AGO"
+            }
+        }
         if (t <= 0 || now <= 0) return "noch nie"
         val s = now - t
         return when {

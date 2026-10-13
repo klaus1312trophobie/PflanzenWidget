@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/nothing_bg"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="●  GREEN GUARDIAN"
+            android:fontFamily="monospace"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            android:letterSpacing="0.15" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⟳ REFRESH"
+            android:padding="4dp"
+            android:fontFamily="monospace"
+            android:textColor="#8A8A8A"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom">
+
+        <TextView
+            android:id="@+id/tv_moisture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-- %"
+            android:fontFamily="monospace"
+            android:textColor="#FFFFFF"
+            android:textSize="32sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="end"
+            android:paddingBottom="4dp">
+            <TextView
+                android:id="@+id/tv_soil_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SOIL MOISTURE"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.1"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp" />
+            <TextView
+                android:id="@+id/tv_watered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="WATERED --"
+                android:fontFamily="monospace"
+                android:textColor="#8A8A8A"
+                android:textSize="9sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginTop="4dp">
+        <ProgressBar
+            android:id="@+id/bar_green"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_gravity="center_vertical"
+            android:max="100"
+            android:progressDrawable="@drawable/nothing_bar_white" />
+        <ProgressBar
+            android:id="@+id/bar_orange"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_gravity="center_vertical"
+            android:max="100"
+            android:visibility="gone"
+            android:progressDrawable="@drawable/nothing_bar_white" />
+        <ProgressBar
+            android:id="@+id/bar_red"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_gravity="center_vertical"
+            android:max="100"
+            android:visibility="gone"
+            android:progressDrawable="@drawable/nothing_bar_red" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/nothing_tile"
+            android:layout_marginStart="0dp"
+            android:padding="6dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TEMP"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.15"
+                android:textColor="#8A8A8A"
+                android:textSize="9sp" />
+            <TextView
+                android:id="@+id/tv_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:fontFamily="monospace"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/tv_temp_mm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:fontFamily="monospace"
+                android:textColor="#8A8A8A"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/nothing_tile"
+            android:layout_marginStart="6dp"
+            android:padding="6dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HUMIDITY"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.15"
+                android:textColor="#8A8A8A"
+                android:textSize="9sp" />
+            <TextView
+                android:id="@+id/tv_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:fontFamily="monospace"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/tv_hum_mm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:fontFamily="monospace"
+                android:textColor="#8A8A8A"
+                android:textSize="9sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/nothing_tile"
+            android:layout_marginStart="6dp"
+            android:padding="6dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VPD"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.15"
+                android:textColor="#8A8A8A"
+                android:textSize="9sp" />
+            <TextView
+                android:id="@+id/tv_vpd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:fontFamily="monospace"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/tv_vpd_stage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:fontFamily="monospace"
+                android:textColor="#8A8A8A"
+                android:textSize="9sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
